@@ -40,7 +40,7 @@ exports.listCmd = (socket ,rl) => {
       models.quiz.findAll()
       .then(quizzes => {
         quizzes.forEach(quiz=> {
-          log(` [${colorize(quiz.id, 'magenta')}]: ${quiz.question}`);
+          log(socket,` [${colorize(quiz.id, 'magenta')}]: ${quiz.question}`);
         });
       })
       .catch(error => {
