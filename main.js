@@ -3,34 +3,35 @@ const model = require('./model');
 const readline = require('readline');
 const{log, biglog, errorlog, colorize}= require('./out');
 const cmds = require('./cmds');
-const net = requiere("net");
+const net = require('net');
 
 
-net.createServer(socket=>{
-console.log("Se ha conectado un cliente desde" + socket.remoteAddress);
-    //Mensaje inicial
-    biglog(socket, 'CORE Quiz', 'green');
+net.createServer(socket=> {
+    console.log("Se ha conectado un cliente desde" + socket.remoteAddress);
+//Mensaje inicial
+biglog(socket, 'CORE Quiz', 'green');
 
-const rl = readline.createInterface({
+    const rl = readline.createInterface({
 
-    input: socket,
+        input: socket,
 
-    output: socket,
+        output: socket,
 
-    prompt: colorize('quiz> ', 'green'),
+        prompt: colorize('quiz> ', 'green'),
 
-    completer : (line)=> {
-    const completions = 'help p show edit test q quit h list add delete play credits '.split(' ');
-const hits = completions.filter((c) => c.startsWith(line));
-// show all completions if none found
-return [hits.length ? hits : completions, line];
-}
+        completer: (line) => {
+        const completions = 'help p show edit test q quit h list add delete play credits '.split(' ');
+            const hits = completions.filter((c) => c.startsWith(line));
+        // show all completions if none found
+        return [hits.length ? hits : completions, line];
+        }
+    });
 
-});
 socket.on("end" ,()=>{rl.close();})
-.on("error" , ()=>rl.close();});
+.on("error" , ()=>{rl.close();});
 
 rl.prompt();
+
 rl.on('line', (line) => {
 
     let args = line.split(" ");
@@ -82,7 +83,7 @@ switch (cmd) {
 
     case 'quit':
     case 'q':
-        cmds.quitCmd(rl);
+        cmds.quitCmd(socket, rl);
         break;
 
     default:
@@ -90,7 +91,7 @@ switch (cmd) {
         log(socket , 'Use el Comando help para obtener ayuda');
         rl.prompt();
         break;
-}
+    }
 
 })
 .on('close', () => {
@@ -98,6 +99,5 @@ switch (cmd) {
 });
 
 
-})
-.listen(3030);
+}).listen(3030);
 

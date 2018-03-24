@@ -1,5 +1,6 @@
 const figlet = require('figlet');
 const chalk = require('chalk');
+const net = require('net');
 
 //Colorea un string
 const colorize = (msg, color) =>{
@@ -11,17 +12,17 @@ const colorize = (msg, color) =>{
 
 //Mensaje de log
 const log = (socket, msg, color) =>{
-	socket.write(colorize(msg, color) + "\n");
+	socket.write(colorize(msg, color)+ "\n" );
 };
 
 //Mensaje de log en grande
-const biglog = (socket,msg,color) =>{
-	log(figlet.textSync(msg, {horizontalLayout:'full'}), color);
+const biglog = (socket, msg, color) =>{
+	log(socket, figlet.textSync(msg, {horizontalLayout:'full'}), color);
 };
 
 //Mensaje de error
-const errorlog = (socket,emsg) =>{
-	socket.write(`${colorize("Error", "red")}: ${colorize(colorize(emsg, "red"), "bgYellowBright")}\n`);
+const errorlog = (socket, emsg) =>{
+	socket.write(`${colorize("Error", "red")}: ${colorize(colorize(emsg, "red"), "bgYellowBright")}` + "\n");
 };
 
 exports = module.exports ={
