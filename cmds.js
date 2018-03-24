@@ -26,9 +26,9 @@ exports.helpCmd = (socket ,rl) => {
 **/
 
 exports.creditsCmd = (socket,rl) => {
-    	log('Autores de la practica:');
-    	log('JOSE MANUEL RENGIFO REYNOLDS');
-    	log('DANIEL ACOSTA SALINERO');
+    	log(socket,'Autores de la practica:');
+    	log(socket,'JOSE MANUEL RENGIFO REYNOLDS');
+    	log(socket,'DANIEL ACOSTA SALINERO');
     	rl.prompt();
 };
 
